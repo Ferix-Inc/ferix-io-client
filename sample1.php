@@ -17,7 +17,7 @@ $mothershipId = "m-1";
 $unitId = "u-1";
 
 // APIキー
-$ferixIoAPIKey = "y0lXK7SLHnJc9XJ9JdeY/3oTHMgYEZymuNIIcf01/Rk=";
+$ferixIoAPIKey = "";
 
 // アップロードのスパン。10秒以下には設定しないでください。
 $waitingTime = 10;
