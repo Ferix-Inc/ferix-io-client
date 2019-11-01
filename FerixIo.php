@@ -68,7 +68,7 @@ class FerixIo {
 
             // キャッシュをクリアにする
             clearstatcache();
-            if (USES_GZIP) {
+            if (USE_GZIP) {
                 $result = $this->uploadGzipData("[".$params."]");
             } else {
                 $result = $this->setData("[".$params."]",200,$jsonDecodeFlag, $upload_old);
@@ -100,7 +100,7 @@ class FerixIo {
 
         // キャッシュをクリアにする
         clearstatcache();
-        if (USES_GZIP) {
+        if (USE_GZIP) {
             $result = $this->uploadGzipData("[".$params."]");
         } else {
             $result = $this->setData("[".$params."]",200,$jsonDecodeFlag, $upload_old);

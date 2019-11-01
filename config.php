@@ -22,7 +22,7 @@ define("MAX_OLD_DATA",600);
 define("PENDING_TIME",0);
 
 // gzip圧縮をして送信するか
-define("USES_GZIP",true);
+define("USE_GZIP",false);
 
 // 時系列APIのエンドポイント
 define("COMMON_API","https://api.ferix.io/api/v1/");
