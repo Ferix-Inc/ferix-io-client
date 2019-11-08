@@ -1,7 +1,8 @@
 # Ferix IOとは？
 
 Ferix IOは環境情報を「見える化」するプラットフォームです。
-温度、湿度、照度、気圧、騒音、CO2濃度(相当)を計測し、リアルタイムから過去にさかのぼり、その量と変化を観測することができます。
+
+Raspberry Piとオムロン環境センサがあれば、温度、湿度、照度、気圧、騒音、CO2濃度(相当)を計測し、リアルタイムから過去にさかのぼり、その量と変化をブラウザ経由で見ることができます。
 家やオフィス、病院や学校などあらゆる場所で簡単に導入できます。
 
 なお、現在開発版のため様々なご不便あるかと思いますが、何卒ご諒恕のほどよろしくお願い申し上げます。
@@ -23,8 +24,9 @@ Ferix IOは環境情報を「見える化」するプラットフォームです
 - Raspberry Pi 3 B+
 - Raspbian GNU/Linux 10 (buster)
 - PHP 7.2
+- Python 3.7.3
 
-※Python版の開発も予定しております。もうしばらくお待ちください。
+
 
 ## データを送信する準備
 
@@ -49,7 +51,7 @@ Ferix IOのコンソール画面を開き、[Unit Settings](https://app.ferix.io
 
 変更後は、必ず「変更を保存する」をクリックして、変更箇所を確実にしてください。
 
-## データ送信の一例
+## データ送信の一例(PHPの場合)
 
 最もシンプルな例として、(実用性はありませんが)Raspberry PiからUNIX時間だけ送信してみましょう。今回はPHPによるサンプルコードを掲載しておきます。
 PHP7.2以上のインストールを先に行っておいてください。
@@ -75,7 +77,7 @@ require_once("FerixIo.php");
 $userId = "sample";
 
 // 母艦ID
-$mothershipId="mothership";
+$mothershipId="m_1";
 
 // ユニットID
 $unitId = "u-1";
@@ -136,7 +138,7 @@ require_once("FerixIo.php");
 $userId = "test1";
 
 // 母艦ID
-$mothershipId="b8:27:eb:9e:4f:c4";
+$mothershipId="m_1";
 
 // APIキー
 $ferixIoAPIKey = "y0lXK7SLHqJc9JDKSfdeY/3oTHMgYEZymuNIIcf01/Rk=";
@@ -157,6 +159,103 @@ if ($result["header"]["http_code"] === 200) {
 }
 
 ```
+
+
+
+# データ送信の一例(Pythonの一例)
+
+ユーザーの新規登録をして、母艦ID、ユニットIDの登録も済ませておいてください。必要な情報は、ユーザーID、母艦ID、ユニットID、それにAPIキーの４つとなります。
+
+pythonディレクトリの中のapp.pyがサンプル用のコードになります。基本的にはferix_io_client.pyを読み込んで使用してもらえれば簡単にデータをアップロードできます。
+
+PHP版と違いとして、オムロン環境センサを使用する場合はユニットIDも記載してもらう必要がありますので、こちにはBIDをあらかじめご用意しておいてください。
+
+```python
+import time
+import datetime
+from ferix_io_client import FerixIoClient
+
+
+# ユーザーID
+USER_ID = "sample"
+
+# 母艦ID
+MOTHERSHIP_ID = "m_1"
+
+# APIキー
+API_KEY = "y0lXK7SLHqJc9JDKSfdeY/3oTHMgYEZymuNIIcf01/Rk="
+
+# スリープする時間(秒。10秒以下にしないでください)
+SLEEP_TIME = 10
+
+# ユニットID
+UNIT_ID = "F8:ED:D7:55:AC:E9"
+
+f = FerixIoClient(USER_ID,MOTHERSHIP_ID,API_KEY)
+
+while True:
+    res = f.send_omron_data(UNIT_ID)
+
+    if res.status_code == 200:
+        print("[*] Success: {}".format(datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S")))
+    else:
+        print("[*] Error {0}: {1}".format(res.status_code, res.text))
+
+    # 古いデータがある場合送信する。
+    res_old = f.sendOldData(200)
+
+    time.sleep(10)
+```
+
+オムロン環境センサを使わずに、任意のデータを送信したい場合は以下のように使います。
+
+```python
+
+import time
+import datetime
+from ferix_io_client import FerixIoClient
+
+
+# ユーザーID
+USER_ID = "sample"
+
+# 母艦ID
+MOTHERSHIP_ID = "m_1"
+
+# APIキー
+API_KEY = "y0lXK7SLHqJc9JDKSfdeY/3oTHMgYEZymuNIIcf01/Rk="
+
+# スリープする時間(秒。10秒以下にしないでください)
+SLEEP_TIME = 10
+
+# ユニットID
+UNIT_ID = "u_1"
+
+f = FerixIoClient(USER_ID,MOTHERSHIP_ID,API_KEY)
+
+while True:
+    params = {
+        "_time":int(datetime.now().timestamp()),
+        "unit_id": UNIT_ID,
+        "mothership_id": MOTHERSHIP_ID,
+        "temperature": 26.5
+    }
+    res = f.send(params)
+
+    if res.status_code == 200:
+        print("[*] Success: {}".format(datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S")))
+    else:
+        print("[*] Error {0}: {1}".format(res.status_code, res.text))
+
+
+    time.sleep(10)
+
+
+```
+
+
+
+Python版の説明は以上となります。
 
 
 
