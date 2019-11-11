@@ -157,7 +157,10 @@ if ($result["header"]["http_code"] === 200) {
 
 ```
 
+# リンク
+こちらのQiita記事でも簡単なチュートリアルをご紹介してます。
+[環境情報「見える化」サービスFerix IOのご紹介](https://qiita.com/IMdev/items/695bffcd346eed5a74d2)
+
 
 # FAQ
-
 Qiitaにて更新予定。
