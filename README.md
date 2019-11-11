@@ -80,10 +80,10 @@ $userId = "sample";
 $mothershipId="m_1";
 
 // ユニットID
-$unitId = "u-1";
+$unitId = ここにユニットIDを入力
 
 // APIキー
-$ferixIoAPIKey = "y0lXK7SLHqJc9JDKSfdeY/3oTHMgYEZymuNIIcf01/Rk=";
+$ferixIoAPIKey = ここにAPIキーを入力
 
 // インスタンスの作成
 $ferix = new FerixIo($userId, $mothershipId, $ferixIoAPIKey);
@@ -141,7 +141,7 @@ $userId = "test1";
 $mothershipId="m_1";
 
 // APIキー
-$ferixIoAPIKey = "y0lXK7SLHqJc9JDKSfdeY/3oTHMgYEZymuNIIcf01/Rk=";
+$ferixIoAPIKey = ここにAPIキーを入力;
 
 // インスタンス
 $ferix = new FerixIo($userId, $mothershipId, $ferixIoAPIKey);
@@ -183,13 +183,13 @@ USER_ID = "sample"
 MOTHERSHIP_ID = "m_1"
 
 # APIキー
-API_KEY = "y0lXK7SLHqJc9JDKSfdeY/3oTHMgYEZymuNIIcf01/Rk="
+API_KEY = ここにAPIキーを入力
 
 # スリープする時間(秒。10秒以下にしないでください)
 SLEEP_TIME = 10
 
 # ユニットID
-UNIT_ID = "F8:ED:D7:55:AC:E9"
+UNIT_ID = ここにユニットIDを入力
 
 f = FerixIoClient(USER_ID,MOTHERSHIP_ID,API_KEY)
 
@@ -223,7 +223,7 @@ USER_ID = "sample"
 MOTHERSHIP_ID = "m_1"
 
 # APIキー
-API_KEY = "y0lXK7SLHqJc9JDKSfdeY/3oTHMgYEZymuNIIcf01/Rk="
+API_KEY = ここにAPIキーを入力
 
 # スリープする時間(秒。10秒以下にしないでください)
 SLEEP_TIME = 10
