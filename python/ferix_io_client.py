@@ -50,7 +50,7 @@ class FerixIoClient():
                 "mothership_id":self.mothership_id,
                 "unit_id": omron_bid,
                 "_time": omron_arr[0],
-                "temperature": 19.4,
+                "temperature": omron_arr[1],
                 "humidity": omron_arr[2],
                 "illumination": omron_arr[3],
                 "atm": omron_arr[4],
