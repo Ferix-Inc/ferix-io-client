@@ -59,9 +59,16 @@ class FerixIoClient():
                 "eco2": omron_arr[7],
             }
         ]
-        r = self.requests.post(self.api_time_series, json = param_array, headers = self.headers)
+        while True:
+            try:
+                r = self.requests.post(self.api_time_series, json = param_array, headers = self.headers)
+                break
+            except Exception as e:
+                print(e)
+                time.sleep(3);
+
         if r.status_code != 200:
-            # 送信失敗時には、データを保存する
+            # 送信先でエラーが発生した場合、データを保存する
             self.saveLogs(param_array[0])
         return r
 
@@ -101,7 +108,14 @@ class FerixIoClient():
         with open(self.log_pickle, 'wb') as f:
             pickle.dump(reserve , f)
 
-        r = self.requests.post(self.api_time_series, json = old_data, headers = self.headers)
+        while True:
+            try:
+                r = self.requests.post(self.api_time_series, json = old_data, headers = self.headers)
+                break
+            except Exception as e:
+                print(e)
+                time.sleep(3);
+
         return r
 
 
